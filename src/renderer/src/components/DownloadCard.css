@@ -50,11 +50,27 @@
   text-transform: uppercase;
 }
 
-.status-downloading { background-color: var(--cat-info); color: #5a7d4a; }
-.status-completed { background-color: var(--cat-success); color: #4a7d6a; }
-.status-paused { background-color: var(--cat-warning); color: #7d4a4a; }
-.status-error, .status-cancelled { background-color: var(--cat-error); color: #7d2a2a; }
-.status-pending { background-color: var(--cat-border); color: var(--cat-text-secondary); }
+.status-downloading {
+  background-color: var(--cat-info);
+  color: #5a7d4a;
+}
+.status-completed {
+  background-color: var(--cat-success);
+  color: #4a7d6a;
+}
+.status-paused {
+  background-color: var(--cat-warning);
+  color: #7d4a4a;
+}
+.status-error,
+.status-cancelled {
+  background-color: var(--cat-error);
+  color: #7d2a2a;
+}
+.status-pending {
+  background-color: var(--cat-border);
+  color: var(--cat-text-secondary);
+}
 
 .progress-section {
   display: flex;

@@ -19,4 +19,3 @@ export interface Settings {
   enableNotifications: boolean
   themeMode: 'light' | 'dark' | 'system'
 }
-

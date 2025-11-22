@@ -1,4 +1,4 @@
-appId: com.electron.app
+appId: com.electron.meowpalette
 productName: MeowPalette
 directories:
   output: dist
@@ -8,7 +8,21 @@ files:
   - package.json
 linux:
   target: AppImage
+  category: Utility
+  synopsis: A cat-themed palette manager
+  maintainer: MeowDev <meow@example.com>
 win:
   target: nsis
+  icon: build/icon.ico
+nsis:
+  oneClick: false
+  perMachine: false
+  allowToChangeInstallationDirectory: true
+  shortcutName: MeowPalette
+fileAssociations:
+  - ext: meow
+    name: MeowPalette File
+    description: MeowPalette Configuration File
+    role: Editor
 mac:
   target: dmg

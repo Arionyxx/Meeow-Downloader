@@ -9,6 +9,10 @@ export default class Store {
       }
     }
   }
-  get(key: string) { return this.store[key] }
-  set(key: string, value: any) { this.store[key] = value }
+  get(key: string) {
+    return this.store[key]
+  }
+  set(key: string, value: any) {
+    this.store[key] = value
+  }
 }
