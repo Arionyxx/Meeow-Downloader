@@ -1,6 +1,9 @@
-import { app, shell, BrowserWindow } from 'electron'
+import { app, shell, BrowserWindow, ipcMain } from 'electron'
 import { join } from 'path'
 import { electronApp, optimizer, is } from '@electron-toolkit/utils'
+import { DownloadManager } from './download-manager'
+
+let downloadManager: DownloadManager
 
 function createWindow(): void {
   // Create the browser window.
@@ -45,6 +48,28 @@ app.whenReady().then(() => {
   // see https://github.com/alex8088/electron-toolkit/tree/master/packages/utils
   app.on('browser-window-created', (_, window) => {
     optimizer.watchWindowShortcuts(window)
+  })
+
+  downloadManager = new DownloadManager()
+
+  // IPC handlers
+  ipcMain.handle('download:enqueue', (_, url) => downloadManager.enqueue(url))
+  ipcMain.handle('download:pause', (_, id) => downloadManager.pause(id))
+  ipcMain.handle('download:resume', (_, id) => downloadManager.resume(id))
+  ipcMain.handle('download:cancel', (_, id) => downloadManager.cancel(id))
+  ipcMain.handle('download:getAll', () => downloadManager.getDownloads())
+  ipcMain.handle('download:setMaxConcurrent', (_, max) => downloadManager.setMaxConcurrent(max))
+
+  downloadManager.on('updated', (downloads) => {
+    BrowserWindow.getAllWindows().forEach((win) => {
+      win.webContents.send('download:updated', downloads)
+    })
+  })
+
+  downloadManager.on('progress', (data) => {
+    BrowserWindow.getAllWindows().forEach((win) => {
+      win.webContents.send('download:progress', data)
+    })
   })
 
   createWindow()
