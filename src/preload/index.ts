@@ -9,6 +9,13 @@ const api = {
   cancel: (id: string) => ipcRenderer.invoke('download:cancel', id),
   getDownloads: () => ipcRenderer.invoke('download:getAll'),
   setMaxConcurrent: (max: number) => ipcRenderer.invoke('download:setMaxConcurrent', max),
+  getSettings: () => ipcRenderer.invoke('settings:getAll'),
+  setSetting: (key: string, value: any) => ipcRenderer.invoke('settings:set', key, value),
+  onSettingsUpdate: (callback) => {
+    const subscription = (_event, value) => callback(value)
+    ipcRenderer.on('settings:updated', subscription)
+    return () => ipcRenderer.removeListener('settings:updated', subscription)
+  },
   onUpdate: (callback) => {
     const subscription = (_event, value) => callback(value)
     ipcRenderer.on('download:updated', subscription)

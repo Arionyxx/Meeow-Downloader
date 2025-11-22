@@ -2,6 +2,7 @@ import { app, shell, BrowserWindow, ipcMain } from 'electron'
 import { join } from 'path'
 import { electronApp, optimizer, is } from '@electron-toolkit/utils'
 import { DownloadManager } from './download-manager'
+import { store } from './store'
 
 let downloadManager: DownloadManager
 
@@ -51,14 +52,38 @@ app.whenReady().then(() => {
   })
 
   downloadManager = new DownloadManager()
+  downloadManager.setMaxConcurrent(store.get('maxConcurrentDownloads'))
+  downloadManager.setDefaultDownloadDirectory(store.get('defaultDownloadDirectory'))
 
   // IPC handlers
+  ipcMain.handle('settings:get', (_, key) => store.get(key))
+  ipcMain.handle('settings:getAll', () => store.store)
+  ipcMain.handle('settings:set', (_, key, value) => {
+    store.set(key, value)
+    if (key === 'maxConcurrentDownloads') {
+      downloadManager.setMaxConcurrent(value as number)
+    } else if (key === 'defaultDownloadDirectory') {
+      downloadManager.setDefaultDownloadDirectory(value as string)
+    }
+    
+    // Notify windows of settings change
+    BrowserWindow.getAllWindows().forEach((win) => {
+      win.webContents.send('settings:updated', store.store)
+    })
+  })
+
   ipcMain.handle('download:enqueue', (_, url) => downloadManager.enqueue(url))
   ipcMain.handle('download:pause', (_, id) => downloadManager.pause(id))
   ipcMain.handle('download:resume', (_, id) => downloadManager.resume(id))
   ipcMain.handle('download:cancel', (_, id) => downloadManager.cancel(id))
   ipcMain.handle('download:getAll', () => downloadManager.getDownloads())
-  ipcMain.handle('download:setMaxConcurrent', (_, max) => downloadManager.setMaxConcurrent(max))
+  ipcMain.handle('download:setMaxConcurrent', (_, max) => {
+    store.set('maxConcurrentDownloads', max)
+    downloadManager.setMaxConcurrent(max)
+    BrowserWindow.getAllWindows().forEach((win) => {
+      win.webContents.send('settings:updated', store.store)
+    })
+  })
 
   downloadManager.on('updated', (downloads) => {
     BrowserWindow.getAllWindows().forEach((win) => {

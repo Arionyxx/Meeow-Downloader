@@ -12,3 +12,11 @@ export interface DownloadItem {
   error?: string
   createdDate: number
 }
+
+export interface Settings {
+  defaultDownloadDirectory: string
+  maxConcurrentDownloads: number
+  enableNotifications: boolean
+  themeMode: 'light' | 'dark' | 'system'
+}
+

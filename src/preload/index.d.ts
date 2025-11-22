@@ -15,6 +15,13 @@ export interface DownloadItem {
   createdDate: number
 }
 
+export interface Settings {
+  defaultDownloadDirectory: string
+  maxConcurrentDownloads: number
+  enableNotifications: boolean
+  themeMode: 'light' | 'dark' | 'system'
+}
+
 export interface DownloadAPI {
   enqueue: (url: string) => Promise<DownloadItem>
   pause: (id: string) => Promise<void>
@@ -22,6 +29,9 @@ export interface DownloadAPI {
   cancel: (id: string) => Promise<void>
   getDownloads: () => Promise<DownloadItem[]>
   setMaxConcurrent: (max: number) => Promise<void>
+  getSettings: () => Promise<Settings>
+  setSetting: (key: keyof Settings, value: any) => Promise<void>
+  onSettingsUpdate: (callback: (settings: Settings) => void) => () => void
   onUpdate: (callback: (downloads: DownloadItem[]) => void) => () => void
   onProgress: (callback: (data: { id: string; downloadedBytes: number; totalBytes: number }) => void) => () => void
 }
