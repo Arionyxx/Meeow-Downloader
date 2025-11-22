@@ -1,0 +1,14 @@
+appId: com.electron.app
+productName: MeowPalette
+directories:
+  output: dist
+  buildResources: build
+files:
+  - out/**/*
+  - package.json
+linux:
+  target: AppImage
+win:
+  target: nsis
+mac:
+  target: dmg
