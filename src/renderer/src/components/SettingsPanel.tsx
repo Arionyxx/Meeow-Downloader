@@ -61,10 +61,7 @@ const SettingsPanel: React.FC = () => {
 
       <div className="setting-item">
         <label>Theme</label>
-        <select
-          value={settings.themeMode}
-          onChange={(e) => handleChange('themeMode', e.target.value)}
-        >
+        <select value={settings.themeMode} onChange={(e) => handleChange('themeMode', e.target.value)}>
           <option value="light">Light</option>
           <option value="dark">Dark</option>
           <option value="system">System</option>

@@ -7,7 +7,7 @@
   --cat-text-primary: #4a4a4a; /* Dark Grey */
   --cat-text-secondary: #7a7a7a; /* Medium Grey */
   --cat-border: #ebd4d4;
-  
+
   --cat-success: #a8e6cf; /* Mint Green */
   --cat-warning: #ffaaa5; /* Salmon */
   --cat-error: #ff8b94; /* Rose */
@@ -30,14 +30,14 @@ body {
 }
 
 ::-webkit-scrollbar-track {
-  background: var(--cat-bg-primary); 
+  background: var(--cat-bg-primary);
 }
- 
+
 ::-webkit-scrollbar-thumb {
-  background: var(--cat-accent); 
+  background: var(--cat-accent);
   border-radius: 4px;
 }
 
 ::-webkit-scrollbar-thumb:hover {
-  background: var(--cat-accent-hover); 
+  background: var(--cat-accent-hover);
 }

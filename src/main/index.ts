@@ -65,7 +65,7 @@ app.whenReady().then(() => {
     } else if (key === 'defaultDownloadDirectory') {
       downloadManager.setDefaultDownloadDirectory(value as string)
     }
-    
+
     // Notify windows of settings change
     BrowserWindow.getAllWindows().forEach((win) => {
       win.webContents.send('settings:updated', store.store)

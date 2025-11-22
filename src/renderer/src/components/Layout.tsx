@@ -16,13 +16,13 @@ const Layout: React.FC<LayoutProps> = ({ children, activeView, onNavigate }) => 
           <span>Meeow</span>
         </div>
         <nav className="nav">
-          <div 
+          <div
             className={`nav-item ${activeView === 'downloads' ? 'active' : ''}`}
             onClick={() => onNavigate('downloads')}
           >
             <span>⬇️</span> Downloads
           </div>
-          <div 
+          <div
             className={`nav-item ${activeView === 'settings' ? 'active' : ''}`}
             onClick={() => onNavigate('settings')}
           >
@@ -33,7 +33,9 @@ const Layout: React.FC<LayoutProps> = ({ children, activeView, onNavigate }) => 
       <main className="main-content">
         <header className="header">
           <h1 className="title">{activeView === 'downloads' ? 'Download Queue' : 'Settings'}</h1>
-          <p className="subtitle">{activeView === 'downloads' ? 'Manage your purr-fect downloads' : 'Configure your preferences'}</p>
+          <p className="subtitle">
+            {activeView === 'downloads' ? 'Manage your purr-fect downloads' : 'Configure your preferences'}
+          </p>
         </header>
         {children}
       </main>
