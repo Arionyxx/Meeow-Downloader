@@ -1,15 +1,22 @@
-appId: com.electron.meowpalette
-productName: MeowPalette
+appId: com.meowdownloader.app
+productName: Meeow-Downloader
 directories:
   output: dist
   buildResources: build
 files:
   - out/**/*
   - package.json
+publish:
+  provider: github
+  owner: meow-dev
+  repo: meeow-downloader
 linux:
-  target: AppImage
+  target:
+    - target: AppImage
+      arch:
+        - x64
   category: Utility
-  synopsis: A cat-themed palette manager
+  synopsis: A purr-fectly designed download manager with a cozy cat theme
   maintainer: MeowDev <meow@example.com>
 win:
   target: nsis
@@ -18,11 +25,11 @@ nsis:
   oneClick: false
   perMachine: false
   allowToChangeInstallationDirectory: true
-  shortcutName: MeowPalette
+  shortcutName: Meeow-Downloader
 fileAssociations:
   - ext: meow
-    name: MeowPalette File
-    description: MeowPalette Configuration File
+    name: Meeow-Downloader File
+    description: Meeow-Downloader Configuration File
     role: Editor
 mac:
   target: dmg
