@@ -1,0 +1,46 @@
+.add-download {
+  background-color: var(--cat-bg-secondary);
+  padding: 20px;
+  border-radius: var(--cat-radius);
+  box-shadow: var(--cat-shadow);
+  display: flex;
+  gap: 10px;
+  align-items: center;
+}
+
+.url-input {
+  flex: 1;
+  padding: 12px 15px;
+  border: 2px solid var(--cat-border);
+  border-radius: 8px;
+  font-size: 1rem;
+  outline: none;
+  transition: border-color 0.2s;
+  background-color: var(--cat-bg-primary);
+  color: var(--cat-text-primary);
+}
+
+.url-input:focus {
+  border-color: var(--cat-accent);
+}
+
+.btn-add {
+  padding: 12px 24px;
+  background-color: var(--cat-accent);
+  color: white;
+  border: none;
+  border-radius: 8px;
+  font-weight: bold;
+  cursor: pointer;
+  transition: background-color 0.2s;
+  white-space: nowrap;
+}
+
+.btn-add:hover {
+  background-color: var(--cat-accent-hover);
+}
+
+.btn-add:disabled {
+  background-color: var(--cat-border);
+  cursor: not-allowed;
+}
