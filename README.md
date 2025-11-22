@@ -27,7 +27,7 @@ Before you begin, ensure you have the following installed:
 
 ### Arch Linux
 
-1. Download the latest `.AppImage` release from the [Releases](https://github.com/yourusername/meeow-downloader/releases) page.
+1. Download the latest `.AppImage` release from the [Releases](https://github.com/meow-dev/meeow-downloader/releases) page.
 2. Make the file executable:
    ```bash
    chmod +x Meeow-Downloader-x.x.x.AppImage
@@ -39,15 +39,20 @@ Before you begin, ensure you have the following installed:
 
 ### Windows
 
-1. Download the latest `.exe` installer from the [Releases](https://github.com/yourusername/meeow-downloader/releases) page.
+1. Download the latest `.exe` installer from the [Releases](https://github.com/meow-dev/meeow-downloader/releases) page.
 2. Run the installer and follow the on-screen instructions.
 3. The application will launch automatically after installation.
+
+### Verifying Releases
+
+You can verify the integrity of the downloaded files by checking the SHA256 checksum provided with the release.
+
 
 ## 🚀 Development Setup
 
 1. **Clone the repository:**
    ```bash
-   git clone https://github.com/yourusername/meeow-downloader.git
+   git clone https://github.com/meow-dev/meeow-downloader.git
    cd meeow-downloader
    ```
 
@@ -148,7 +153,7 @@ Have questions or feedback? Reach out to us!
 
 - **Email**: meow@example.com
 - **Twitter**: @MeowDownloader
-- **Issues**: [GitHub Issues](https://github.com/yourusername/meeow-downloader/issues)
+- **Issues**: [GitHub Issues](https://github.com/meow-dev/meeow-downloader/issues)
 
 ---
 *Built with 🐱 and ☕ by the Meeow Team.*

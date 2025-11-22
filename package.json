@@ -1,7 +1,7 @@
 {
-  "name": "project",
+  "name": "meeow-downloader",
   "version": "1.0.0",
-  "description": "A cat-themed palette manager",
+  "description": "A purr-fectly designed download manager with a cozy cat theme",
   "main": "out/main/index.js",
   "scripts": {
     "dev": "electron-vite dev",
@@ -11,8 +11,13 @@
     "test": "vitest run",
     "format": "prettier --write .",
     "package": "electron-builder",
-    "dist:linux": "npm run build && electron-builder --linux",
-    "dist:win": "npm run build && electron-builder --win"
+    "dist:linux": "npm run build && electron-builder --linux && npm run checksums",
+    "dist:win": "npm run build && electron-builder --win && npm run checksums",
+    "checksums": "node scripts/generate-checksums.js"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/meow-dev/meeow-downloader.git"
   },
   "keywords": [],
   "author": "MeowDev <meow@example.com>",
