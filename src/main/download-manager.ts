@@ -115,6 +115,10 @@ export class DownloadManager extends EventEmitter {
     this.processQueue()
   }
 
+  public setDefaultDownloadDirectory(dir: string): void {
+    this.defaultDownloadDir = dir
+  }
+
   private processQueue(): void {
     const downloadingCount = this.queue.filter((i) => i.status === 'downloading').length
     if (downloadingCount >= this.maxConcurrentDownloads) {

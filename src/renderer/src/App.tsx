@@ -2,10 +2,12 @@ import React, { useEffect, useState } from 'react'
 import Layout from './components/Layout'
 import AddDownload from './components/AddDownload'
 import DownloadList from './components/DownloadList'
+import SettingsPanel from './components/SettingsPanel'
 import type { DownloadItem } from './types'
 
 function App(): JSX.Element {
   const [downloads, setDownloads] = useState<DownloadItem[]>([])
+  const [view, setView] = useState<'downloads' | 'settings'>('downloads')
 
   useEffect(() => {
     // Initial fetch
@@ -39,9 +41,15 @@ function App(): JSX.Element {
   }, [])
 
   return (
-    <Layout>
-      <AddDownload />
-      <DownloadList downloads={downloads} />
+    <Layout activeView={view} onNavigate={setView}>
+      {view === 'downloads' ? (
+        <>
+          <AddDownload />
+          <DownloadList downloads={downloads} />
+        </>
+      ) : (
+        <SettingsPanel />
+      )}
     </Layout>
   )
 }
