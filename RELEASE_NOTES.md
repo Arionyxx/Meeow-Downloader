@@ -37,3 +37,10 @@ SHA256 checksums are provided for verification.
 
 ## Known Issues
 - Windows installer build currently requires Wine configuration on some Linux environments.
+
+## Version 1.1.0 - Dark Mode Arrives! 🌙
+
+The cats have been working hard in the night shift!
+- **True Dark Mode**: A complete dark theme implementation that's easy on the eyes.
+- **System Theme Support**: The app now automatically syncs with your OS theme settings (Light/Dark).
+- **Instant Switching**: Change themes instantly without restarting the app.

@@ -1,27 +1,68 @@
 :root {
-  /* Cat Palette */
-  --cat-bg-primary: #fdf6f6; /* Warm white/cream */
-  --cat-bg-secondary: #ffffff; /* White */
-  --cat-accent: #ff8c82; /* Darker Soft Pink for better contrast */
-  --cat-accent-hover: #ff7469;
-  --cat-text-primary: #4a4a4a; /* Dark Grey */
-  --cat-text-secondary: #7a7a7a; /* Medium Grey */
-  --cat-border: #ebd4d4;
-
-  --cat-success: #a8e6cf; /* Mint Green */
-  --cat-warning: #ffaaa5; /* Salmon */
-  --cat-error: #ff8b94; /* Rose */
-  --cat-info: #dcedc1; /* Light Green */
-
-  --cat-shadow: 0 4px 12px rgba(0, 0, 0, 0.05);
+  /* Shared tokens */
   --cat-radius: 12px;
-  --cat-font: 'Nunito', 'Segoe UI', sans-serif; /* Friendly font if available */
+  --cat-font: 'Nunito', 'Segoe UI', sans-serif;
+  
+  /* Light theme (default) */
+  --cat-bg-primary: #fdf6f6;
+  --cat-bg-secondary: #ffffff;
+  --cat-accent: #ff8c82;
+  --cat-accent-hover: #ff7469;
+  --cat-text-primary: #4a4a4a;
+  --cat-text-secondary: #7a7a7a;
+  --cat-border: #ebd4d4;
+  --cat-success: #a8e6cf;
+  --cat-warning: #ffaaa5;
+  --cat-error: #ff8b94;
+  --cat-info: #dcedc1;
+  --cat-shadow: 0 4px 12px rgba(0, 0, 0, 0.05);
+  --cat-card-bg: #ffffff;
+  --cat-input-bg: #ffffff;
+  --cat-input-border: #ddd;
+
+  --cat-status-downloading-text: #5a7d4a;
+  --cat-status-completed-text: #4a7d6a;
+  --cat-status-paused-text: #7d4a4a;
+  --cat-status-error-text: #7d2a2a;
+
+  --cat-btn-danger-bg: #fff0f0;
+  --cat-btn-danger-text: #ff6b6b;
+  --cat-btn-danger-hover: #ffe0e0;
+}
+
+[data-theme='dark'] {
+  /* Dark theme */
+  --cat-bg-primary: #1e1e1e;
+  --cat-bg-secondary: #2d2d2d;
+  --cat-accent: #ff8c82;
+  --cat-accent-hover: #ff7469;
+  --cat-text-primary: #e0e0e0;
+  --cat-text-secondary: #a0a0a0;
+  --cat-border: #444444;
+  --cat-success: #3e8e7b;
+  --cat-warning: #b35f5a;
+  --cat-error: #b84b55;
+  --cat-info: #7da06c;
+  --cat-shadow: 0 4px 12px rgba(0, 0, 0, 0.3);
+  --cat-card-bg: #2d2d2d;
+  --cat-input-bg: #333333;
+  --cat-input-border: #555;
+
+  --cat-status-downloading-text: #dcedc1;
+  --cat-status-completed-text: #a8e6cf;
+  --cat-status-paused-text: #ffaaa5;
+  --cat-status-error-text: #ff8b94;
+
+  --cat-btn-danger-bg: #4a2a2a;
+  --cat-btn-danger-text: #ff8b94;
+  --cat-btn-danger-hover: #5a3a3a;
 }
 
 body {
   background-color: var(--cat-bg-primary);
   color: var(--cat-text-primary);
   font-family: var(--cat-font);
+  transition: background-color 0.3s, color 0.3s;
 }
 
 /* Scrollbar styling */
