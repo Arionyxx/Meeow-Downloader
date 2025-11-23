@@ -52,7 +52,7 @@ The artifact will be in `dist/`.
 After building, you can run the AppImage directly:
 
 ```bash
-./dist/MeowPalette-1.0.0.AppImage
+./dist/Meeow-Downloader-1.0.0.AppImage
 ```
 
 (Note: might require `--no-sandbox` in some environments)
