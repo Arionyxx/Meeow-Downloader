@@ -25,6 +25,12 @@ const api = {
     const subscription = (_event, value) => callback(value)
     ipcRenderer.on('download:progress', subscription)
     return () => ipcRenderer.removeListener('download:progress', subscription)
+  },
+  getSystemTheme: () => ipcRenderer.invoke('theme:getSystem'),
+  onSystemThemeChanged: (callback) => {
+    const subscription = (_event, value) => callback(value)
+    ipcRenderer.on('theme:systemChanged', subscription)
+    return () => ipcRenderer.removeListener('theme:systemChanged', subscription)
   }
 }
 

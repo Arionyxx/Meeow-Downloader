@@ -1,4 +1,4 @@
-import { app, shell, BrowserWindow, ipcMain } from 'electron'
+import { app, shell, BrowserWindow, ipcMain, nativeTheme } from 'electron'
 import { join } from 'path'
 import { electronApp, optimizer, is } from '@electron-toolkit/utils'
 import { DownloadManager } from './download-manager'
@@ -69,6 +69,15 @@ app.whenReady().then(() => {
     // Notify windows of settings change
     BrowserWindow.getAllWindows().forEach((win) => {
       win.webContents.send('settings:updated', store.store)
+    })
+  })
+
+  // Theme IPC
+  ipcMain.handle('theme:getSystem', () => (nativeTheme.shouldUseDarkColors ? 'dark' : 'light'))
+
+  nativeTheme.on('updated', () => {
+    BrowserWindow.getAllWindows().forEach((win) => {
+      win.webContents.send('theme:systemChanged', nativeTheme.shouldUseDarkColors ? 'dark' : 'light')
     })
   })
 

@@ -34,6 +34,8 @@ export interface DownloadAPI {
   onSettingsUpdate: (callback: (settings: Settings) => void) => () => void
   onUpdate: (callback: (downloads: DownloadItem[]) => void) => () => void
   onProgress: (callback: (data: { id: string; downloadedBytes: number; totalBytes: number }) => void) => () => void
+  getSystemTheme: () => Promise<'light' | 'dark'>
+  onSystemThemeChanged: (callback: (theme: 'light' | 'dark') => void) => () => void
 }
 
 declare global {

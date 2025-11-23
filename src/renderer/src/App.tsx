@@ -4,8 +4,10 @@ import AddDownload from './components/AddDownload'
 import DownloadList from './components/DownloadList'
 import SettingsPanel from './components/SettingsPanel'
 import type { DownloadItem } from './types'
+import { useTheme } from './hooks/useTheme'
 
 function App(): JSX.Element {
+  useTheme()
   const [downloads, setDownloads] = useState<DownloadItem[]>([])
   const [view, setView] = useState<'downloads' | 'settings'>('downloads')
 

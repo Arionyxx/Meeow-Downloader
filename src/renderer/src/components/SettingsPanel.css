@@ -1,8 +1,8 @@
 .settings-panel {
   padding: 20px;
-  background: var(--card-bg, #fff);
+  background: var(--cat-card-bg);
   border-radius: 8px;
-  box-shadow: 0 2px 8px rgba(0, 0, 0, 0.1);
+  box-shadow: var(--cat-shadow);
   max-width: 600px;
 }
 
@@ -15,14 +15,16 @@
 .setting-item label {
   font-weight: bold;
   margin-bottom: 8px;
-  color: var(--text-color, #333);
+  color: var(--cat-text-primary);
 }
 
 .setting-item input[type='text'],
 .setting-item input[type='number'],
 .setting-item select {
   padding: 8px 12px;
-  border: 1px solid #ddd;
+  border: 1px solid var(--cat-input-border);
+  background: var(--cat-input-bg);
+  color: var(--cat-text-primary);
   border-radius: 4px;
   font-size: 14px;
 }
