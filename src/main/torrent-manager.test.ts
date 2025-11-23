@@ -83,11 +83,12 @@ import { TorrentManager } from './torrent-manager'
 describe('TorrentManager', () => {
   let manager: TorrentManager
 
-  beforeEach(() => {
+  beforeEach(async () => {
     vi.clearAllMocks()
     mockTorrent.removeAllListeners()
     destroyMock = vi.fn()
     manager = new TorrentManager()
+    await manager.initialize()
   })
 
   it('should enqueue a magnet link', async () => {

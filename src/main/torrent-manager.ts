@@ -2,7 +2,7 @@ import { app } from 'electron'
 import path from 'path'
 import fs from 'fs'
 import { EventEmitter } from 'events'
-import WebTorrent from 'webtorrent'
+import type WebTorrent from 'webtorrent'
 import { randomUUID } from 'crypto'
 
 export type TorrentStatus = 'pending' | 'downloading' | 'seeding' | 'paused' | 'error' | 'checking' | 'completed'
@@ -32,7 +32,7 @@ interface TorrentState {
 }
 
 export class TorrentManager extends EventEmitter {
-  private client: WebTorrent.Instance
+  private client: WebTorrent.Instance | null = null
   private queue: TorrentItem[] = []
   private storePath: string
   private defaultDownloadDir: string
@@ -42,10 +42,14 @@ export class TorrentManager extends EventEmitter {
 
   constructor() {
     super()
-    this.client = new WebTorrent()
     this.storePath = path.join(app.getPath('userData'), 'torrents.json')
     this.defaultDownloadDir = app.getPath('downloads')
     this.loadState()
+  }
+
+  public async initialize(): Promise<void> {
+    const { default: WebTorrentClass } = await import('webtorrent')
+    this.client = new WebTorrentClass()
 
     // Resume torrents that should be active
     this.processQueue()
@@ -109,6 +113,8 @@ export class TorrentManager extends EventEmitter {
   }
 
   public pause(id: string): void {
+    if (!this.client) return
+
     const item = this.queue.find((i) => i.id === id)
     if (item && (item.status === 'downloading' || item.status === 'seeding' || item.status === 'checking')) {
       if (item.infoHash) {
@@ -137,6 +143,8 @@ export class TorrentManager extends EventEmitter {
   }
 
   public cancel(id: string): void {
+    if (!this.client) return
+
     const item = this.queue.find((i) => i.id === id)
     if (item) {
       if (
@@ -189,6 +197,8 @@ export class TorrentManager extends EventEmitter {
   }
 
   private processQueue(): void {
+    if (!this.client) return
+
     for (const item of this.queue) {
       if (item.status === 'pending') {
         this.startTorrent(item)
@@ -197,6 +207,8 @@ export class TorrentManager extends EventEmitter {
   }
 
   private startTorrent(item: TorrentItem): void {
+    if (!this.client) return
+
     const source = item.magnetURI || item.filePath
     if (!source) {
       item.status = 'error'
@@ -253,12 +265,13 @@ export class TorrentManager extends EventEmitter {
   }
 
   private updateTorrents(): void {
+    if (!this.client) return
     // let changed = false
 
     this.queue.forEach((item) => {
       if (item.status === 'downloading' || item.status === 'seeding' || item.status === 'checking') {
         if (item.infoHash) {
-          const torrent = this.client.get(item.infoHash)
+          const torrent = this.client!.get(item.infoHash)
           if (torrent) {
             item.downloadSpeed = torrent.downloadSpeed
             item.uploadSpeed = torrent.uploadSpeed
