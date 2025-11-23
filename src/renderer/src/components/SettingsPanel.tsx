@@ -67,6 +67,52 @@ const SettingsPanel: React.FC = () => {
           <option value="system">System</option>
         </select>
       </div>
+
+      <div className="setting-item">
+        <label>Auto Capture Links</label>
+        <div className="toggle-container">
+          <input
+            type="checkbox"
+            checked={settings.autoCaptureEnabled}
+            onChange={(e) => handleChange('autoCaptureEnabled', e.target.checked)}
+          />
+          <span>{settings.autoCaptureEnabled ? 'On' : 'Off'}</span>
+        </div>
+      </div>
+
+      {settings.autoCaptureEnabled && (
+        <div className="setting-item">
+          <label>Capture Sources</label>
+          <div className="checkbox-group" style={{ display: 'flex', gap: '10px' }}>
+            <label>
+              <input
+                type="checkbox"
+                checked={settings.autoCaptureSources?.includes('clipboard')}
+                onChange={(e) => {
+                  const sources = new Set(settings.autoCaptureSources || [])
+                  if (e.target.checked) sources.add('clipboard')
+                  else sources.delete('clipboard')
+                  handleChange('autoCaptureSources', Array.from(sources))
+                }}
+              />
+              Clipboard
+            </label>
+            <label>
+              <input
+                type="checkbox"
+                checked={settings.autoCaptureSources?.includes('magnet')}
+                onChange={(e) => {
+                  const sources = new Set(settings.autoCaptureSources || [])
+                  if (e.target.checked) sources.add('magnet')
+                  else sources.delete('magnet')
+                  handleChange('autoCaptureSources', Array.from(sources))
+                }}
+              />
+              Magnet Links
+            </label>
+          </div>
+        </div>
+      )}
     </div>
   )
 }

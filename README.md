@@ -13,6 +13,7 @@ Meeow-Downloader is a cross-platform download manager built with modern web tech
 - **📦 Download Queue**: Efficiently manage multiple downloads with priority handling.
 - **⏯️ Pause/Resume**: Interrupt and continue downloads at your convenience.
 - **💻 Cross-Platform**: Works seamlessly on Windows, Linux, and macOS.
+- **🔗 Auto-Capture**: Automatically detects download links and magnet links from your clipboard.
 - **🎨 Cat Theming**: Enjoy a "meow-tastic" user interface with customizable themes.
 
 ## 🛠️ Prerequisites
@@ -131,6 +132,7 @@ Configuration is handled via the "Settings" panel in the application:
 - **Default Download Directory**: Set your preferred folder for saving files.
 - **Max Concurrent Downloads**: Limit the number of active downloads (1-10).
 - **Enable Notifications**: Toggle desktop notifications for completed downloads.
+- **Auto Capture**: Enable automatic link detection from clipboard (URLs and Magnet links).
 - **Theme**: Switch between Light, Dark, or System theme preference.
 
 ## 🤝 Contributing

@@ -44,3 +44,10 @@ The cats have been working hard in the night shift!
 - **True Dark Mode**: A complete dark theme implementation that's easy on the eyes.
 - **System Theme Support**: The app now automatically syncs with your OS theme settings (Light/Dark).
 - **Instant Switching**: Change themes instantly without restarting the app.
+
+## Version 1.2.0 - Auto Capture Feature 🎣
+
+We've taught the cats to catch links!
+- **Auto Capture**: The app now automatically detects download links and magnet URIs copied to your clipboard.
+- **Smart Notification**: A non-intrusive popup allows you to quickly add detected links to your queue or ignore them.
+- **Customizable**: Enable/disable specific sources (Clipboard, Magnet) in Settings.

@@ -20,6 +20,8 @@ export interface Settings {
   maxConcurrentDownloads: number
   enableNotifications: boolean
   themeMode: 'light' | 'dark' | 'system'
+  autoCaptureEnabled: boolean
+  autoCaptureSources: ('clipboard' | 'magnet')[]
 }
 
 export interface DownloadAPI {
@@ -36,6 +38,9 @@ export interface DownloadAPI {
   onProgress: (callback: (data: { id: string; downloadedBytes: number; totalBytes: number }) => void) => () => void
   getSystemTheme: () => Promise<'light' | 'dark'>
   onSystemThemeChanged: (callback: (theme: 'light' | 'dark') => void) => () => void
+  onLinkCaptured: (callback: (link: { url: string; type: string; timestamp: number }) => void) => () => void
+  acceptCapturedLink: (url: string) => Promise<void>
+  dismissCapturedLink: (url: string) => Promise<void>
 }
 
 declare global {

@@ -31,7 +31,14 @@ const api = {
     const subscription = (_event, value) => callback(value)
     ipcRenderer.on('theme:systemChanged', subscription)
     return () => ipcRenderer.removeListener('theme:systemChanged', subscription)
-  }
+  },
+  onLinkCaptured: (callback) => {
+    const subscription = (_event, value) => callback(value)
+    ipcRenderer.on('capture:detected', subscription)
+    return () => ipcRenderer.removeListener('capture:detected', subscription)
+  },
+  acceptCapturedLink: (url: string) => ipcRenderer.invoke('capture:accept', url),
+  dismissCapturedLink: (url: string) => ipcRenderer.invoke('capture:dismiss', url)
 }
 
 // Use `contextBridge` APIs to expose Electron APIs to
