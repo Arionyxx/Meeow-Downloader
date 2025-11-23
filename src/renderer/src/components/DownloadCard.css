@@ -1,147 +1,147 @@
-.card {
-  background-color: var(--cat-bg-secondary);
-  border-radius: var(--cat-radius);
-  padding: 20px;
-  box-shadow: var(--cat-shadow);
-  border: 1px solid var(--cat-border);
+.download-card {
   display: flex;
   flex-direction: column;
-  gap: 15px;
-  transition: transform 0.2s;
+  gap: 20px;
 }
 
-.card:hover {
-  transform: translateY(-2px);
-}
-
-.card-header {
+.card-top-row {
   display: flex;
-  justify-content: space-between;
   align-items: flex-start;
+  gap: 16px;
 }
 
-.file-info {
+.file-icon {
+  font-size: 2rem;
+  background-color: var(--cat-bg-primary);
+  padding: 12px;
+  border-radius: 12px;
+  line-height: 1;
+}
+
+.file-details {
+  flex: 1;
+  min-width: 0; /* Enable truncation */
   display: flex;
   flex-direction: column;
-  gap: 5px;
+  gap: 4px;
 }
 
-.filename {
-  font-weight: bold;
-  font-size: 1.1rem;
+.file-name {
+  font-size: 1.05rem;
+  font-weight: 700;
+  margin: 0;
   color: var(--cat-text-primary);
-  word-break: break-all;
+  white-space: nowrap;
+  overflow: hidden;
+  text-overflow: ellipsis;
 }
 
-.url {
-  font-size: 0.8rem;
+.file-url {
+  font-size: 0.85rem;
   color: var(--cat-text-secondary);
   white-space: nowrap;
   overflow: hidden;
   text-overflow: ellipsis;
-  max-width: 300px;
+  text-decoration: none;
 }
 
-.status-badge {
-  padding: 4px 12px;
+.file-url:hover {
+  text-decoration: underline;
+}
+
+.status-pill {
+  padding: 6px 12px;
   border-radius: 20px;
-  font-size: 0.8rem;
-  font-weight: bold;
+  font-size: 0.75rem;
+  font-weight: 700;
   text-transform: uppercase;
+  white-space: nowrap;
 }
 
-.status-downloading {
-  background-color: var(--cat-info);
-  color: var(--cat-status-downloading-text);
-}
-.status-completed {
-  background-color: var(--cat-success);
-  color: var(--cat-status-completed-text);
-}
-.status-paused {
-  background-color: var(--cat-warning);
-  color: var(--cat-status-paused-text);
-}
-.status-error,
-.status-cancelled {
-  background-color: var(--cat-error);
-  color: var(--cat-status-error-text);
-}
-.status-pending {
-  background-color: var(--cat-border);
-  color: var(--cat-text-secondary);
-}
+.status-downloading { background-color: var(--cat-info); color: var(--cat-status-downloading-text); }
+.status-completed { background-color: var(--cat-success); color: var(--cat-status-completed-text); }
+.status-paused { background-color: var(--cat-warning); color: var(--cat-status-paused-text); }
+.status-error, .status-cancelled { background-color: var(--cat-error); color: var(--cat-status-error-text); }
+.status-pending { background-color: var(--cat-border); color: var(--cat-text-secondary); }
 
 .progress-section {
   display: flex;
   flex-direction: column;
-  gap: 8px;
+  gap: 10px;
 }
 
-.progress-bar-container {
+.progress-info {
+  display: flex;
+  justify-content: space-between;
+  font-size: 0.9rem;
+  color: var(--cat-text-primary);
+  font-weight: 600;
+}
+
+.progress-bar-track {
   height: 8px;
   background-color: var(--cat-bg-primary);
   border-radius: 4px;
   overflow: hidden;
-  width: 100%;
 }
 
-.progress-bar {
+.progress-bar-fill {
   height: 100%;
   background-color: var(--cat-accent);
   border-radius: 4px;
   transition: width 0.3s ease;
 }
 
-.progress-text {
+.meta-row {
   display: flex;
-  justify-content: space-between;
-  font-size: 0.8rem;
+  gap: 24px;
+  font-size: 0.85rem;
+}
+
+.meta-item {
+  display: flex;
+  gap: 6px;
+}
+
+.meta-label {
   color: var(--cat-text-secondary);
 }
 
-.controls {
-  display: flex;
-  gap: 10px;
-  margin-top: 5px;
-}
-
-.btn {
-  border: none;
-  padding: 8px 16px;
-  border-radius: 8px;
-  font-size: 0.9rem;
-  cursor: pointer;
-  transition: background 0.2s;
-  font-weight: 600;
-  display: flex;
-  align-items: center;
-  gap: 5px;
-}
-
-.btn-primary {
-  background-color: var(--cat-accent);
-  color: white;
-}
-
-.btn-primary:hover {
-  background-color: var(--cat-accent-hover);
-}
-
-.btn-secondary {
-  background-color: var(--cat-bg-primary);
+.meta-value {
   color: var(--cat-text-primary);
+  font-weight: 600;
 }
 
-.btn-secondary:hover {
-  background-color: var(--cat-border);
+.card-actions {
+  display: flex;
+  gap: 12px;
+  flex-wrap: wrap;
 }
 
-.btn-danger {
-  background-color: var(--cat-btn-danger-bg);
-  color: var(--cat-btn-danger-text);
+.error-text {
+  color: var(--cat-error);
+  font-weight: 600;
 }
 
-.btn-danger:hover {
-  background-color: var(--cat-btn-danger-hover);
+/* Responsive */
+@media (max-width: 600px) {
+  .card-top-row {
+    flex-wrap: wrap;
+  }
+  
+  .file-icon {
+    display: none;
+  }
+  
+  .status-pill {
+    margin-left: auto;
+  }
+  
+  .card-actions {
+    justify-content: stretch;
+  }
+  
+  .card-actions button {
+    flex: 1;
+  }
 }

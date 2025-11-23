@@ -6,7 +6,7 @@
 
 ## 📖 Overview
 
-Meeow-Downloader is a cross-platform download manager built with modern web technologies. It combines powerful download management features with a delightful cat-themed interface, making your downloading experience efficient and adorable.
+Meeow-Downloader is a cross-platform download manager built with modern web technologies. It combines powerful download management features with a delightful cat-themed interface, now refreshed with a modern, polished look making your downloading experience efficient and adorable.
 
 ## ✨ Features
 
@@ -14,7 +14,8 @@ Meeow-Downloader is a cross-platform download manager built with modern web tech
 - **⏯️ Pause/Resume**: Interrupt and continue downloads at your convenience.
 - **💻 Cross-Platform**: Works seamlessly on Windows, Linux, and macOS.
 - **🔗 Auto-Capture**: Automatically detects download links and magnet links from your clipboard.
-- **🎨 Cat Theming**: Enjoy a "meow-tastic" user interface with customizable themes.
+- **🎨 Modern UI**: A freshly polished interface with responsive design, better typography, and smooth transitions.
+- **🐱 Cat Theming**: Enjoy a "meow-tastic" user interface with customizable themes.
 
 ## 🛠️ Prerequisites
 

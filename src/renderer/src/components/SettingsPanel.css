@@ -1,42 +1,102 @@
-.settings-panel {
-  padding: 20px;
-  background: var(--cat-card-bg);
-  border-radius: 8px;
-  box-shadow: var(--cat-shadow);
-  max-width: 600px;
-}
-
-.setting-item {
-  margin-bottom: 20px;
+.settings-container {
   display: flex;
   flex-direction: column;
+  gap: 24px;
+  max-width: 800px;
+  margin: 0 auto;
 }
 
-.setting-item label {
-  font-weight: bold;
-  margin-bottom: 8px;
+.settings-card {
+  display: flex;
+  flex-direction: column;
+  gap: 24px;
+}
+
+.section-title {
+  font-size: 1.25rem;
+  font-weight: 700;
   color: var(--cat-text-primary);
+  margin: 0 0 8px 0;
+  padding-bottom: 12px;
+  border-bottom: 1px solid var(--cat-border);
 }
 
-.setting-item input[type='text'],
-.setting-item input[type='number'],
-.setting-item select {
-  padding: 8px 12px;
-  border: 1px solid var(--cat-input-border);
-  background: var(--cat-input-bg);
-  color: var(--cat-text-primary);
-  border-radius: 4px;
-  font-size: 14px;
-}
-
-.toggle-container {
+.setting-row {
   display: flex;
   align-items: center;
-  gap: 10px;
+  justify-content: space-between;
+  gap: 24px;
 }
 
-.setting-item input[type='checkbox'] {
-  width: 20px;
-  height: 20px;
+.setting-info {
+  flex: 1;
+}
+
+.setting-label {
+  display: block;
+  font-weight: 600;
+  color: var(--cat-text-primary);
+  margin-bottom: 4px;
+}
+
+.setting-desc {
+  font-size: 0.85rem;
+  color: var(--cat-text-secondary);
+  margin: 0;
+}
+
+.setting-input {
+  max-width: 300px;
+}
+
+.setting-input-small {
+  max-width: 80px;
+}
+
+.setting-select {
+  max-width: 200px;
+}
+
+.sub-setting {
+  margin-left: 24px;
+  padding-top: 12px;
+  border-top: 1px dashed var(--cat-border);
+}
+
+.checkbox-group {
+  display: flex;
+  gap: 16px;
+}
+
+.checkbox-label {
+  display: flex;
+  align-items: center;
+  gap: 8px;
   cursor: pointer;
+  color: var(--cat-text-primary);
+  font-size: 0.95rem;
+}
+
+.loading-state {
+  text-align: center;
+  padding: 40px;
+  color: var(--cat-text-secondary);
+}
+
+/* Responsive */
+@media (max-width: 600px) {
+  .setting-row {
+    flex-direction: column;
+    align-items: flex-start;
+    gap: 12px;
+  }
+  
+  .setting-input, 
+  .setting-select {
+    max-width: 100%;
+  }
+  
+  .sub-setting {
+    margin-left: 0;
+  }
 }
