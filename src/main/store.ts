@@ -8,6 +8,8 @@ export interface Settings {
   themeMode: 'light' | 'dark' | 'system'
   autoCaptureEnabled: boolean
   autoCaptureSources: ('clipboard' | 'magnet')[]
+  torrentDownloadDirectory: string
+  torrentSeedingEnabled: boolean
 }
 
 const schema: Store.Schema<Settings> = {
@@ -41,6 +43,14 @@ const schema: Store.Schema<Settings> = {
       enum: ['clipboard', 'magnet']
     },
     default: ['clipboard', 'magnet']
+  },
+  torrentDownloadDirectory: {
+    type: 'string',
+    default: app.getPath('downloads')
+  },
+  torrentSeedingEnabled: {
+    type: 'boolean',
+    default: false
   }
 }
 

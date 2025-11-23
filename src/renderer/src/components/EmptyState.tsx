@@ -8,10 +8,10 @@ interface EmptyStateProps {
   action?: React.ReactNode
 }
 
-const EmptyState: React.FC<EmptyStateProps> = ({ 
-  title = "No downloads yet", 
-  message = "Feed me some URLs to start downloading!",
-  icon = "📦",
+const EmptyState: React.FC<EmptyStateProps> = ({
+  title = 'No downloads yet',
+  message = 'Feed me some URLs to start downloading!',
+  icon = '📦',
   action
 }) => {
   return (

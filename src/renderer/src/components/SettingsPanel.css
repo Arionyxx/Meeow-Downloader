@@ -90,12 +90,12 @@
     align-items: flex-start;
     gap: 12px;
   }
-  
-  .setting-input, 
+
+  .setting-input,
   .setting-select {
     max-width: 100%;
   }
-  
+
   .sub-setting {
     margin-left: 0;
   }

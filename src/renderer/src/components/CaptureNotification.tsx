@@ -41,8 +41,12 @@ const CaptureNotification: React.FC = () => {
         </div>
       </div>
       <div className="capture-actions">
-        <button onClick={handleDismiss} className="btn-dismiss">Ignore</button>
-        <button onClick={handleAccept} className="btn-accept">Add to Queue</button>
+        <button onClick={handleDismiss} className="btn-dismiss">
+          Ignore
+        </button>
+        <button onClick={handleAccept} className="btn-accept">
+          Add to Queue
+        </button>
       </div>
     </div>
   )
