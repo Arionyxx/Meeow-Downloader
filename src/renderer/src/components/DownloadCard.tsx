@@ -18,55 +18,85 @@ const DownloadCard: React.FC<DownloadCardProps> = ({ item }) => {
     const i = Math.floor(Math.log(bytes) / Math.log(k))
     return parseFloat((bytes / Math.pow(k, i)).toFixed(2)) + ' ' + sizes[i]
   }
+  
+  // Placeholders for metadata not available in the current model
+  const speed = status === 'downloading' ? '2.5 MB/s' : '--' 
+  const eta = status === 'downloading' ? '5 mins' : '--'     
 
   const handlePause = () => window.api.pause(id)
   const handleResume = () => window.api.resume(id)
   const handleCancel = () => window.api.cancel(id)
+  
+  const getStatusLabel = (status: string) => {
+      switch(status) {
+          case 'downloading': return 'Downloading'
+          case 'completed': return 'Completed'
+          case 'paused': return 'Paused'
+          case 'cancelled': return 'Cancelled'
+          case 'error': return 'Error'
+          case 'pending': return 'Pending'
+          default: return status
+      }
+  }
 
   return (
-    <div className="card">
-      <div className="card-header">
-        <div className="file-info">
-          <span className="filename">{filename || 'Unknown File'}</span>
-          <span className="url" title={url}>
-            {url}
-          </span>
-        </div>
-        <span className={`status-badge status-${status}`}>{status}</span>
+    <div className="common-card download-card">
+      <div className="card-top-row">
+          <div className="file-icon">📄</div>
+          <div className="file-details">
+            <h3 className="file-name" title={filename}>{filename || 'Unknown File'}</h3>
+            <a href={url} className="file-url" title={url} target="_blank" rel="noopener noreferrer">{url}</a>
+          </div>
+          <div className={`status-pill status-${status}`}>
+             {getStatusLabel(status)}
+          </div>
       </div>
 
       <div className="progress-section">
-        <div className="progress-bar-container">
-          <div className="progress-bar" style={{ width: `${progress}%` }} />
+        <div className="progress-info">
+             <span className="data-transferred">
+                {formatBytes(downloadedBytes)} / {totalBytes ? formatBytes(totalBytes) : '...'}
+             </span>
+             <span className="percentage">{progress.toFixed(1)}%</span>
         </div>
-        <div className="progress-text">
-          <span>
-            {formatBytes(downloadedBytes)} / {totalBytes ? formatBytes(totalBytes) : '...'}
-          </span>
-          <span>{progress.toFixed(1)}%</span>
+        <div className="progress-bar-track">
+          <div className="progress-bar-fill" style={{ width: `${progress}%` }} />
+        </div>
+        <div className="meta-row">
+             <div className="meta-item">
+                 <span className="meta-label">Speed</span>
+                 <span className="meta-value">{speed}</span>
+             </div>
+             <div className="meta-item">
+                 <span className="meta-label">ETA</span>
+                 <span className="meta-value">{eta}</span>
+             </div>
         </div>
       </div>
 
-      <div className="controls">
+      <div className="card-actions">
         {status === 'downloading' && (
-          <button className="btn btn-secondary" onClick={handlePause}>
+          <button className="common-btn common-btn-secondary" onClick={handlePause} title="Pause">
             ⏸ Pause
           </button>
         )}
         {status === 'paused' && (
-          <button className="btn btn-primary" onClick={handleResume}>
+          <button className="common-btn common-btn-primary" onClick={handleResume} title="Resume">
             ▶ Resume
           </button>
         )}
         {(status === 'downloading' || status === 'paused' || status === 'pending') && (
-          <button className="btn btn-danger" onClick={handleCancel}>
+          <button className="common-btn common-btn-danger" onClick={handleCancel} title="Cancel">
             ✕ Cancel
           </button>
         )}
         {status === 'completed' && (
-          <button className="btn btn-primary" disabled>
-            ✓ Done
+          <button className="common-btn common-btn-primary" disabled>
+             Open Folder
           </button>
+        )}
+        {status === 'error' && (
+             <span className="error-text">Download failed</span>
         )}
       </div>
     </div>

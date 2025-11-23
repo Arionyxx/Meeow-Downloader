@@ -1,46 +1,79 @@
-.add-download {
-  background-color: var(--cat-bg-secondary);
-  padding: 20px;
-  border-radius: var(--cat-radius);
-  box-shadow: var(--cat-shadow);
+.add-download-card {
   display: flex;
-  gap: 10px;
-  align-items: center;
+  flex-direction: column;
+  gap: 16px;
 }
 
-.url-input {
-  flex: 1;
-  padding: 12px 15px;
-  border: 2px solid var(--cat-border);
-  border-radius: 8px;
-  font-size: 1rem;
-  outline: none;
-  transition: border-color 0.2s;
-  background-color: var(--cat-bg-primary);
+.card-header {
+  display: flex;
+  flex-direction: column;
+  gap: 4px;
+}
+
+.card-title {
+  font-size: 1.1rem;
+  font-weight: 700;
+  margin: 0;
   color: var(--cat-text-primary);
 }
 
-.url-input:focus {
-  border-color: var(--cat-accent);
+.card-caption {
+  font-size: 0.9rem;
+  color: var(--cat-text-secondary);
+  margin: 0;
 }
 
-.btn-add {
-  padding: 12px 24px;
-  background-color: var(--cat-accent);
-  color: white;
-  border: none;
-  border-radius: 8px;
-  font-weight: bold;
-  cursor: pointer;
-  transition: background-color 0.2s;
-  white-space: nowrap;
+.add-download-form {
+  display: flex;
+  flex-direction: column;
+  gap: 16px;
 }
 
-.btn-add:hover {
-  background-color: var(--cat-accent-hover);
+.input-group {
+  display: flex;
+  flex-direction: column;
+  gap: 6px;
 }
 
-.btn-add:disabled {
-  background-color: var(--cat-border);
-  cursor: not-allowed;
+.input-error {
+  border-color: var(--cat-error);
+}
+
+.validation-message {
+  font-size: 0.85rem;
+  color: var(--cat-error);
+  display: flex;
+  align-items: center;
+  gap: 4px;
+}
+
+.form-actions {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+}
+
+.supported-protocols {
+  display: flex;
+  align-items: center;
+  gap: 6px;
+  font-size: 0.85rem;
+  color: var(--cat-text-secondary);
+}
+
+.protocol-icon {
+  font-size: 1rem;
+}
+
+/* Responsive adjustments */
+@media (max-width: 600px) {
+  .form-actions {
+    flex-direction: column;
+    gap: 12px;
+    align-items: stretch;
+  }
+  
+  .supported-protocols {
+    justify-content: center;
+  }
 }
