@@ -60,3 +60,15 @@ We've taught the cats to catch links!
 - **Auto Capture**: The app now automatically detects download links and magnet URIs copied to your clipboard.
 - **Smart Notification**: A non-intrusive popup allows you to quickly add detected links to your queue or ignore them.
 - **Customizable**: Enable/disable specific sources (Clipboard, Magnet) in Settings.
+
+## Version 1.3.0 - Torrent UI Upgrade 🌪️
+
+We've unleashed the full power of torrents in the interface!
+
+- **Native Torrent UI**: Add and manage torrents directly from the main interface.
+- **Magnet & File Support**: Paste magnet links or open `.torrent` files with ease.
+- **Detailed Stats**: View peers, upload speed, and seeding status for your torrent tasks.
+- **Seeding Control**: Option to stop seeding when you're done sharing.
+- **Improved Settings**: Configure dedicated torrent download paths and seeding preferences.
+
+**Note**: Advanced DHT configuration is not yet available in the UI.

@@ -23,6 +23,17 @@ const SettingsPanel: React.FC = () => {
     window.api.setSetting(key, value)
   }
 
+  const handleDirectoryPick = async (key: keyof Settings) => {
+    try {
+      const path = await window.api.pickDirectory()
+      if (path) {
+        handleChange(key, path)
+      }
+    } catch (error) {
+      console.error('Failed to pick directory', error)
+    }
+  }
+
   if (!settings) return <div className="loading-state">Loading settings...</div>
 
   return (
@@ -38,13 +49,22 @@ const SettingsPanel: React.FC = () => {
             </label>
             <p className="setting-desc">Where your files will be saved.</p>
           </div>
-          <input
-            id="dl-dir"
-            type="text"
-            className="common-input setting-input"
-            value={settings.defaultDownloadDirectory}
-            onChange={(e) => handleChange('defaultDownloadDirectory', e.target.value)}
-          />
+          <div className="input-with-button">
+            <input
+              id="dl-dir"
+              type="text"
+              className="common-input setting-input"
+              value={settings.defaultDownloadDirectory}
+              onChange={(e) => handleChange('defaultDownloadDirectory', e.target.value)}
+            />
+            <button
+              className="common-btn common-btn-secondary"
+              onClick={() => handleDirectoryPick('defaultDownloadDirectory')}
+              title="Browse..."
+            >
+              📂
+            </button>
+          </div>
         </div>
 
         <div className="setting-row">
@@ -79,6 +99,51 @@ const SettingsPanel: React.FC = () => {
             <option value="dark">Dark</option>
             <option value="system">System</option>
           </select>
+        </div>
+      </section>
+
+      {/* Torrent Settings Card */}
+      <section className="common-card settings-card">
+        <h3 className="section-title">Torrent</h3>
+
+        <div className="setting-row">
+          <div className="setting-info">
+            <label className="setting-label" htmlFor="torrent-dl-dir">
+              Torrent Download Directory
+            </label>
+            <p className="setting-desc">Where torrents will be saved.</p>
+          </div>
+          <div className="input-with-button">
+            <input
+              id="torrent-dl-dir"
+              type="text"
+              className="common-input setting-input"
+              value={settings.torrentDownloadDirectory}
+              onChange={(e) => handleChange('torrentDownloadDirectory', e.target.value)}
+            />
+            <button
+              className="common-btn common-btn-secondary"
+              onClick={() => handleDirectoryPick('torrentDownloadDirectory')}
+              title="Browse..."
+            >
+              📂
+            </button>
+          </div>
+        </div>
+
+        <div className="setting-row">
+          <div className="setting-info">
+            <label className="setting-label">Enable Seeding</label>
+            <p className="setting-desc">Continue uploading after download completes.</p>
+          </div>
+          <label className="common-toggle">
+            <input
+              type="checkbox"
+              checked={settings.torrentSeedingEnabled}
+              onChange={(e) => handleChange('torrentSeedingEnabled', e.target.checked)}
+            />
+            <span className="common-slider"></span>
+          </label>
         </div>
       </section>
 

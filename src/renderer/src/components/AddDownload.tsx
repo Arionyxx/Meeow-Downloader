@@ -2,6 +2,7 @@ import React, { useState } from 'react'
 import './AddDownload.css'
 
 const AddDownload: React.FC = () => {
+  const [activeTab, setActiveTab] = useState<'http' | 'torrent'>('http')
   const [url, setUrl] = useState('')
   const [loading, setLoading] = useState(false)
   const [error, setError] = useState<string | null>(null)
@@ -16,19 +17,33 @@ const AddDownload: React.FC = () => {
     }
   }
 
+  const validateMagnet = (value: string): boolean => {
+    return value.startsWith('magnet:?')
+  }
+
   const handleSubmit = async (e: React.FormEvent) => {
     e.preventDefault()
     if (!url.trim()) return
 
-    if (!validateUrl(url)) {
-      setError('Please enter a valid URL (e.g. https://example.com/file.zip)')
-      return
-    }
-
-    setError(null)
     setLoading(true)
+    setError(null)
+
     try {
-      await window.api.enqueue(url)
+      if (activeTab === 'http') {
+        if (!validateUrl(url)) {
+          setError('Please enter a valid URL (e.g. https://example.com/file.zip)')
+          setLoading(false)
+          return
+        }
+        await window.api.enqueue(url)
+      } else {
+        if (!validateMagnet(url)) {
+          setError('Please enter a valid magnet URI')
+          setLoading(false)
+          return
+        }
+        await window.api.addMagnet(url)
+      }
       setUrl('')
     } catch (err) {
       console.error('Failed to add download:', err)
@@ -38,16 +53,64 @@ const AddDownload: React.FC = () => {
     }
   }
 
+  const handleFilePick = async () => {
+    setError(null)
+    setLoading(true)
+    try {
+      const filePath = await window.api.pickTorrentFile()
+      if (filePath) {
+        await window.api.addTorrentFile(filePath)
+        setUrl('')
+      }
+    } catch (err) {
+      console.error('Failed to pick torrent file:', err)
+      setError('Failed to add torrent file.')
+    } finally {
+      setLoading(false)
+    }
+  }
+
   const handleInputChange = (e: React.ChangeEvent<HTMLInputElement>) => {
-    setUrl(e.target.value)
+    const val = e.target.value
+    setUrl(val)
     if (error) setError(null)
+
+    // Auto-switch to torrent tab if magnet link is pasted in HTTP tab
+    if (activeTab === 'http' && val.trim().startsWith('magnet:?')) {
+      setActiveTab('torrent')
+    }
   }
 
   return (
     <div className="common-card add-download-card">
       <div className="card-header">
         <h2 className="card-title">Add New Download</h2>
-        <p className="card-caption">Paste a link to start downloading immediately.</p>
+        <p className="card-caption">
+          {activeTab === 'http'
+            ? 'Paste a link to start downloading immediately.'
+            : 'Add a magnet link or select a torrent file.'}
+        </p>
+      </div>
+
+      <div className="tabs">
+        <button
+          className={`tab ${activeTab === 'http' ? 'active' : ''}`}
+          onClick={() => {
+            setActiveTab('http')
+            setError(null)
+          }}
+        >
+          Direct Download
+        </button>
+        <button
+          className={`tab ${activeTab === 'torrent' ? 'active' : ''}`}
+          onClick={() => {
+            setActiveTab('torrent')
+            setError(null)
+          }}
+        >
+          Torrent
+        </button>
       </div>
 
       <form className="add-download-form" onSubmit={handleSubmit}>
@@ -55,7 +118,11 @@ const AddDownload: React.FC = () => {
           <input
             type="text"
             className={`common-input ${error ? 'input-error' : ''}`}
-            placeholder="Paste URL to download (e.g. https://...)"
+            placeholder={
+              activeTab === 'http'
+                ? 'Paste URL to download (e.g. https://...)'
+                : 'Paste Magnet URI (magnet:?...)'
+            }
             value={url}
             onChange={handleInputChange}
             disabled={loading}
@@ -63,12 +130,34 @@ const AddDownload: React.FC = () => {
           {error && <div className="validation-message">⚠️ {error}</div>}
         </div>
 
+        {activeTab === 'torrent' && (
+          <div className="torrent-inputs">
+            <div className="or-divider">OR</div>
+            <button
+              type="button"
+              className="common-btn common-btn-secondary"
+              onClick={handleFilePick}
+              disabled={loading}
+            >
+              📂 Choose .torrent file
+            </button>
+          </div>
+        )}
+
         <div className="form-actions">
           <div className="supported-protocols">
             <span className="protocol-icon">ℹ️</span>
-            <span>Supports HTTP, HTTPS, FTP</span>
+            <span>
+              {activeTab === 'http'
+                ? 'Supports HTTP, HTTPS, FTP'
+                : 'Supports Magnet links, .torrent files'}
+            </span>
           </div>
-          <button type="submit" className="common-btn common-btn-primary" disabled={loading || !url.trim()}>
+          <button
+            type="submit"
+            className="common-btn common-btn-primary"
+            disabled={loading || !url.trim()}
+          >
             {loading ? 'Adding...' : 'Start Download'}
           </button>
         </div>

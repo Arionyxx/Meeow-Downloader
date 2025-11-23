@@ -57,6 +57,18 @@
   max-width: 200px;
 }
 
+.input-with-button {
+  display: flex;
+  gap: 8px;
+  width: 100%;
+  max-width: 300px;
+}
+
+.input-with-button .setting-input {
+  flex: 1;
+  max-width: none;
+}
+
 .sub-setting {
   margin-left: 24px;
   padding-top: 12px;
