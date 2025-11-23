@@ -1,4 +1,4 @@
-import { app, shell, BrowserWindow, ipcMain, nativeTheme } from 'electron'
+import { app, shell, BrowserWindow, ipcMain, nativeTheme, dialog } from 'electron'
 import { join } from 'path'
 import { electronApp, optimizer, is } from '@electron-toolkit/utils'
 import { DownloadManager } from './download-manager'
@@ -148,6 +148,23 @@ app.whenReady().then(() => {
 
   ipcMain.handle('tasks:addMagnet', (_, magnet) => torrentManager.addFromMagnet(magnet))
   ipcMain.handle('tasks:addFile', (_, filePath) => torrentManager.addFromFile(filePath))
+
+  ipcMain.handle('dialog:openTorrent', async () => {
+    const result = await dialog.showOpenDialog({
+      properties: ['openFile'],
+      filters: [{ name: 'Torrent Files', extensions: ['torrent'] }]
+    })
+    if (result.canceled || result.filePaths.length === 0) return null
+    return result.filePaths[0]
+  })
+
+  ipcMain.handle('dialog:openDirectory', async () => {
+    const result = await dialog.showOpenDialog({
+      properties: ['openDirectory']
+    })
+    if (result.canceled || result.filePaths.length === 0) return null
+    return result.filePaths[0]
+  })
 
   downloadManager.on('updated', (downloads) => {
     BrowserWindow.getAllWindows().forEach((win) => {

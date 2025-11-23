@@ -7,7 +7,10 @@ interface DownloadCardProps {
 }
 
 const DownloadCard: React.FC<DownloadCardProps> = ({ item }) => {
-  const { id, filename, url, status, downloadedBytes, totalBytes } = item
+  const { id, status, downloadedBytes, totalBytes, kind } = item
+  
+  const filename = kind === 'torrent' ? (item.name || 'Unknown Torrent') : (item.filename || 'Unknown File')
+  const url = kind === 'http' ? item.url : item.magnetURI
 
   const progress = totalBytes > 0 ? (downloadedBytes / totalBytes) * 100 : 0
 
@@ -19,13 +22,22 @@ const DownloadCard: React.FC<DownloadCardProps> = ({ item }) => {
     return parseFloat((bytes / Math.pow(k, i)).toFixed(2)) + ' ' + sizes[i]
   }
 
-  // Placeholders for metadata not available in the current model
-  const speed = status === 'downloading' ? '2.5 MB/s' : '--'
-  const eta = status === 'downloading' ? '5 mins' : '--'
+  const formatSpeed = (bytesPerSec?: number) => {
+      if (!bytesPerSec) return '0 B/s'
+      return formatBytes(bytesPerSec) + '/s'
+  }
 
-  const handlePause = () => window.api.pause(id)
-  const handleResume = () => window.api.resume(id)
-  const handleCancel = () => window.api.cancel(id)
+  // Placeholders for metadata not available in the current model
+  // Note: App.tsx updates these fields now.
+  const downloadSpeed = item.downloadSpeed ? formatSpeed(item.downloadSpeed) : (status === 'downloading' ? '--' : '0 B/s')
+  const uploadSpeed = kind === 'torrent' && item.uploadSpeed ? formatSpeed(item.uploadSpeed) : null
+  
+  // Simple ETA calculation if we wanted to add it, but for now kept simple or '--'
+  const eta = '--' 
+
+  const handlePause = () => window.api.pauseTask(id)
+  const handleResume = () => window.api.resumeTask(id)
+  const handleCancel = () => window.api.cancelTask(id)
 
   const getStatusLabel = (status: string) => {
     switch (status) {
@@ -41,22 +53,26 @@ const DownloadCard: React.FC<DownloadCardProps> = ({ item }) => {
         return 'Error'
       case 'pending':
         return 'Pending'
+      case 'seeding':
+        return 'Seeding'
+      case 'checking':
+        return 'Checking'
       default:
         return status
     }
   }
 
   return (
-    <div className="common-card download-card">
+    <div className={`common-card download-card ${kind === 'torrent' ? 'torrent-card' : ''}`}>
       <div className="card-top-row">
-        <div className="file-icon">📄</div>
+        <div className="file-icon">{kind === 'torrent' ? '🔗' : '📄'}</div>
         <div className="file-details">
           <h3 className="file-name" title={filename}>
-            {filename || 'Unknown File'}
+            {filename}
           </h3>
-          <a href={url} className="file-url" title={url} target="_blank" rel="noopener noreferrer">
+          <div className="file-url" title={url}>
             {url}
-          </a>
+          </div>
         </div>
         <div className={`status-pill status-${status}`}>{getStatusLabel(status)}</div>
       </div>
@@ -73,13 +89,27 @@ const DownloadCard: React.FC<DownloadCardProps> = ({ item }) => {
         </div>
         <div className="meta-row">
           <div className="meta-item">
-            <span className="meta-label">Speed</span>
-            <span className="meta-value">{speed}</span>
+            <span className="meta-label">DL Speed</span>
+            <span className="meta-value">{downloadSpeed}</span>
           </div>
-          <div className="meta-item">
-            <span className="meta-label">ETA</span>
-            <span className="meta-value">{eta}</span>
-          </div>
+          {kind === 'torrent' && (
+            <>
+               <div className="meta-item">
+                <span className="meta-label">UL Speed</span>
+                <span className="meta-value">{uploadSpeed || '0 B/s'}</span>
+              </div>
+              <div className="meta-item">
+                <span className="meta-label">Peers</span>
+                <span className="meta-value">{item.peers || 0}</span>
+              </div>
+            </>
+          )}
+          {kind !== 'torrent' && (
+            <div className="meta-item">
+                <span className="meta-label">ETA</span>
+                <span className="meta-value">{eta}</span>
+            </div>
+          )}
         </div>
       </div>
 
@@ -89,22 +119,31 @@ const DownloadCard: React.FC<DownloadCardProps> = ({ item }) => {
             ⏸ Pause
           </button>
         )}
-        {status === 'paused' && (
+        {(status === 'paused' || status === 'error') && (
           <button className="common-btn common-btn-primary" onClick={handleResume} title="Resume">
             ▶ Resume
           </button>
         )}
-        {(status === 'downloading' || status === 'paused' || status === 'pending') && (
+        {status === 'seeding' && (
+             <button className="common-btn common-btn-danger" onClick={handleCancel} title="Stop Seeding">
+             ⏹ Stop Seeding
+           </button>
+        )}
+        {(status === 'downloading' || status === 'paused' || status === 'pending' || status === 'checking') && (
           <button className="common-btn common-btn-danger" onClick={handleCancel} title="Cancel">
             ✕ Cancel
           </button>
         )}
-        {status === 'completed' && (
+        {status === 'completed' && kind !== 'torrent' && (
           <button className="common-btn common-btn-primary" disabled>
             Open Folder
           </button>
         )}
-        {status === 'error' && <span className="error-text">Download failed</span>}
+         {status === 'completed' && kind === 'torrent' && !item.isSeeding && (
+          <button className="common-btn common-btn-primary" disabled>
+            Open Folder
+          </button>
+        )}
       </div>
     </div>
   )

@@ -47,6 +47,8 @@ const api = {
   cancelTask: (id: string) => ipcRenderer.invoke('tasks:cancel', id),
   addMagnet: (magnet: string) => ipcRenderer.invoke('tasks:addMagnet', magnet),
   addTorrentFile: (filePath: string) => ipcRenderer.invoke('tasks:addFile', filePath),
+  pickTorrentFile: () => ipcRenderer.invoke('dialog:openTorrent'),
+  pickDirectory: () => ipcRenderer.invoke('dialog:openDirectory'),
 
   onTasksUpdate: (callback) => {
     const subscription = (_event, value) => callback(value)

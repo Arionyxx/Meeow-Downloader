@@ -10,29 +10,38 @@ export type DownloadStatus =
   | 'seeding'
   | 'checking'
 
-export interface DownloadItem {
+export interface BaseTask {
   id: string
-  url?: string
-  magnetURI?: string
-  filePath?: string
-  filename?: string
   name?: string
   directory: string
   status: DownloadStatus
   totalBytes: number
   downloadedBytes: number
-  uploadedBytes?: number
   downloadSpeed?: number
   uploadSpeed?: number
-  progress?: number
-  peers?: number
-  infoHash?: string
   resumable?: boolean
   error?: string
   createdDate: number
-  kind?: 'http' | 'torrent'
+  progress?: number
   isSeeding?: boolean
 }
+
+export interface HttpTask extends BaseTask {
+  kind: 'http'
+  url: string
+  filename?: string
+}
+
+export interface TorrentTask extends BaseTask {
+  kind: 'torrent'
+  magnetURI?: string
+  filePath?: string
+  infoHash?: string
+  peers?: number
+}
+
+export type DownloadTask = HttpTask | TorrentTask
+export type DownloadItem = DownloadTask
 
 export interface Settings {
   defaultDownloadDirectory: string
@@ -81,6 +90,8 @@ export interface DownloadAPI {
   cancelTask: (id: string) => Promise<void>
   addMagnet: (magnet: string) => Promise<DownloadItem>
   addTorrentFile: (filePath: string) => Promise<DownloadItem>
+  pickTorrentFile: () => Promise<string | null>
+  pickDirectory: () => Promise<string | null>
   onTasksUpdate: (callback: (tasks: DownloadItem[]) => void) => () => void
   onTaskProgress: (callback: (data: TaskProgress) => void) => () => void
 }

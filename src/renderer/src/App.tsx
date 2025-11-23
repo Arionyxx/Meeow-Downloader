@@ -14,22 +14,26 @@ function App(): JSX.Element {
 
   useEffect(() => {
     // Initial fetch
-    window.api.getDownloads().then(setDownloads).catch(console.error)
+    window.api.getAllTasks().then(setDownloads).catch(console.error)
 
     // Listen for updates (status changes, new items)
-    const removeUpdateListener = window.api.onUpdate((updatedList) => {
+    const removeUpdateListener = window.api.onTasksUpdate((updatedList) => {
       setDownloads(updatedList)
     })
 
     // Listen for progress
-    const removeProgressListener = window.api.onProgress((data) => {
+    const removeProgressListener = window.api.onTaskProgress((data) => {
       setDownloads((prev) => {
         return prev.map((item) => {
           if (item.id === data.id) {
             return {
               ...item,
               downloadedBytes: data.downloadedBytes,
-              totalBytes: data.totalBytes
+              totalBytes: data.totalBytes,
+              downloadSpeed: data.downloadSpeed,
+              uploadSpeed: data.uploadSpeed,
+              progress: data.progress,
+              peers: data.peers
             }
           }
           return item

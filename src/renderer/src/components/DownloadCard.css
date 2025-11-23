@@ -80,6 +80,15 @@
   color: var(--cat-text-secondary);
 }
 
+.status-seeding {
+  background-color: var(--cat-accent);
+  color: #fff;
+}
+.status-checking {
+  background-color: var(--cat-info);
+  color: var(--cat-status-downloading-text);
+}
+
 .progress-section {
   display: flex;
   flex-direction: column;

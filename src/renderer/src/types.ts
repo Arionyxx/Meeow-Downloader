@@ -8,29 +8,38 @@ export type DownloadStatus =
   | 'seeding'
   | 'checking'
 
-export interface DownloadItem {
+export interface BaseTask {
   id: string
-  url?: string
-  filename?: string
   name?: string
   directory: string
   status: DownloadStatus
   totalBytes: number
   downloadedBytes: number
+  downloadSpeed?: number
+  uploadSpeed?: number
   resumable?: boolean
   error?: string
   createdDate: number
-  // Unified fields
-  kind?: 'http' | 'torrent'
-  magnetURI?: string
-  filePath?: string
-  peers?: number
-  uploadSpeed?: number
-  downloadSpeed?: number
   progress?: number
-  infoHash?: string
   isSeeding?: boolean
 }
+
+export interface HttpTask extends BaseTask {
+  kind: 'http'
+  url: string
+  filename?: string
+}
+
+export interface TorrentTask extends BaseTask {
+  kind: 'torrent'
+  magnetURI?: string
+  filePath?: string
+  infoHash?: string
+  peers?: number
+}
+
+export type DownloadTask = HttpTask | TorrentTask
+export type DownloadItem = DownloadTask
 
 export interface Settings {
   defaultDownloadDirectory: string
