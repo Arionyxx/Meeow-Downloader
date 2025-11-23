@@ -1,0 +1,82 @@
+.capture-notification {
+  position: fixed;
+  bottom: 20px;
+  right: 20px;
+  background-color: var(--cat-card-bg);
+  border: 1px solid var(--cat-border);
+  box-shadow: var(--cat-shadow);
+  border-radius: var(--cat-radius);
+  padding: 16px;
+  width: 320px;
+  z-index: 1000;
+  display: flex;
+  flex-direction: column;
+  gap: 12px;
+  animation: slideIn 0.3s ease-out;
+}
+
+@keyframes slideIn {
+  from {
+    transform: translateY(20px);
+    opacity: 0;
+  }
+  to {
+    transform: translateY(0);
+    opacity: 1;
+  }
+}
+
+.capture-title {
+  font-weight: 600;
+  font-size: 1rem;
+  color: var(--cat-text-primary);
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+}
+
+.capture-url {
+  font-size: 0.9rem;
+  color: var(--cat-text-secondary);
+  white-space: nowrap;
+  overflow: hidden;
+  text-overflow: ellipsis;
+  background: var(--cat-bg-primary);
+  padding: 8px;
+  border-radius: 6px;
+}
+
+.capture-actions {
+  display: flex;
+  gap: 10px;
+  justify-content: flex-end;
+}
+
+.capture-actions button {
+  padding: 8px 16px;
+  border-radius: 8px;
+  font-size: 0.9rem;
+  cursor: pointer;
+  border: none;
+  font-weight: 600;
+  transition: opacity 0.2s;
+}
+
+.capture-actions button:hover {
+  opacity: 0.9;
+}
+
+.btn-accept {
+  background-color: var(--cat-accent);
+  color: white;
+}
+
+.btn-dismiss {
+  background-color: transparent;
+  color: var(--cat-text-secondary);
+  border: 1px solid var(--cat-border) !important;
+}
+
+.btn-dismiss:hover {
+  background-color: var(--cat-bg-primary);
+}

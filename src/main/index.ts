@@ -2,9 +2,11 @@ import { app, shell, BrowserWindow, ipcMain, nativeTheme } from 'electron'
 import { join } from 'path'
 import { electronApp, optimizer, is } from '@electron-toolkit/utils'
 import { DownloadManager } from './download-manager'
+import { LinkCaptureService } from './auto-capture'
 import { store } from './store'
 
 let downloadManager: DownloadManager
+let linkCaptureService: LinkCaptureService
 
 function createWindow(): void {
   // Create the browser window.
@@ -55,6 +57,8 @@ app.whenReady().then(() => {
   downloadManager.setMaxConcurrent(store.get('maxConcurrentDownloads'))
   downloadManager.setDefaultDownloadDirectory(store.get('defaultDownloadDirectory'))
 
+  linkCaptureService = new LinkCaptureService(downloadManager)
+
   // IPC handlers
   ipcMain.handle('settings:get', (_, key) => store.get(key))
   ipcMain.handle('settings:getAll', () => store.store)
@@ -74,6 +78,9 @@ app.whenReady().then(() => {
 
   // Theme IPC
   ipcMain.handle('theme:getSystem', () => (nativeTheme.shouldUseDarkColors ? 'dark' : 'light'))
+
+  ipcMain.handle('capture:accept', (_, url) => linkCaptureService.accept(url))
+  ipcMain.handle('capture:dismiss', (_, url) => linkCaptureService.dismiss(url))
 
   nativeTheme.on('updated', () => {
     BrowserWindow.getAllWindows().forEach((win) => {

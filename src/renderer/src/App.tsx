@@ -3,6 +3,7 @@ import Layout from './components/Layout'
 import AddDownload from './components/AddDownload'
 import DownloadList from './components/DownloadList'
 import SettingsPanel from './components/SettingsPanel'
+import CaptureNotification from './components/CaptureNotification'
 import type { DownloadItem } from './types'
 import { useTheme } from './hooks/useTheme'
 
@@ -44,6 +45,7 @@ function App(): JSX.Element {
 
   return (
     <Layout activeView={view} onNavigate={setView}>
+      <CaptureNotification />
       {view === 'downloads' ? (
         <>
           <AddDownload />

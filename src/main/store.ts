@@ -6,6 +6,8 @@ export interface Settings {
   maxConcurrentDownloads: number
   enableNotifications: boolean
   themeMode: 'light' | 'dark' | 'system'
+  autoCaptureEnabled: boolean
+  autoCaptureSources: ('clipboard' | 'magnet')[]
 }
 
 const schema: Store.Schema<Settings> = {
@@ -27,6 +29,18 @@ const schema: Store.Schema<Settings> = {
     type: 'string',
     enum: ['light', 'dark', 'system'],
     default: 'system'
+  },
+  autoCaptureEnabled: {
+    type: 'boolean',
+    default: true
+  },
+  autoCaptureSources: {
+    type: 'array',
+    items: {
+      type: 'string',
+      enum: ['clipboard', 'magnet']
+    },
+    default: ['clipboard', 'magnet']
   }
 }
 

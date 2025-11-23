@@ -18,4 +18,6 @@ export interface Settings {
   maxConcurrentDownloads: number
   enableNotifications: boolean
   themeMode: 'light' | 'dark' | 'system'
+  autoCaptureEnabled: boolean
+  autoCaptureSources: ('clipboard' | 'magnet')[]
 }
