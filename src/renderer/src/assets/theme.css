@@ -2,7 +2,7 @@
   /* Shared tokens */
   --cat-radius: 12px;
   --cat-font: 'Nunito', 'Segoe UI', sans-serif;
-  
+
   /* Light theme (default) */
   --cat-bg-primary: #fdf6f6;
   --cat-bg-secondary: #ffffff;
@@ -62,7 +62,9 @@ body {
   background-color: var(--cat-bg-primary);
   color: var(--cat-text-primary);
   font-family: var(--cat-font);
-  transition: background-color 0.3s, color 0.3s;
+  transition:
+    background-color 0.3s,
+    color 0.3s;
 }
 
 /* Scrollbar styling */

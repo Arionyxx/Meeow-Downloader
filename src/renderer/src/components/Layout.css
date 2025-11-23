@@ -120,7 +120,7 @@
     justify-content: center;
     margin-bottom: 32px;
   }
-  
+
   .brand span:not(.brand-icon) {
     display: none;
   }
@@ -133,14 +133,15 @@
     margin: 0 auto;
   }
 
-  .nav-item span:not(:first-child) { /* Hide text label */
+  .nav-item span:not(:first-child) {
+    /* Hide text label */
     display: none;
   }
-  
+
   .status-strip {
     padding: 0 24px;
   }
-  
+
   .content-area {
     padding: 24px;
   }

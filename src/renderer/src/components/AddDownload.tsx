@@ -49,7 +49,7 @@ const AddDownload: React.FC = () => {
         <h2 className="card-title">Add New Download</h2>
         <p className="card-caption">Paste a link to start downloading immediately.</p>
       </div>
-      
+
       <form className="add-download-form" onSubmit={handleSubmit}>
         <div className="input-group">
           <input
@@ -62,19 +62,15 @@ const AddDownload: React.FC = () => {
           />
           {error && <div className="validation-message">⚠️ {error}</div>}
         </div>
-        
+
         <div className="form-actions">
-           <div className="supported-protocols">
-             <span className="protocol-icon">ℹ️</span>
-             <span>Supports HTTP, HTTPS, FTP</span>
-           </div>
-           <button 
-             type="submit" 
-             className="common-btn common-btn-primary" 
-             disabled={loading || !url.trim()}
-           >
-             {loading ? 'Adding...' : 'Start Download'}
-           </button>
+          <div className="supported-protocols">
+            <span className="protocol-icon">ℹ️</span>
+            <span>Supports HTTP, HTTPS, FTP</span>
+          </div>
+          <button type="submit" className="common-btn common-btn-primary" disabled={loading || !url.trim()}>
+            {loading ? 'Adding...' : 'Start Download'}
+          </button>
         </div>
       </form>
     </div>

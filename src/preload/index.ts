@@ -10,7 +10,7 @@ const api = {
   getDownloads: () => ipcRenderer.invoke('download:getAll'),
   setMaxConcurrent: (max: number) => ipcRenderer.invoke('download:setMaxConcurrent', max),
   getSettings: () => ipcRenderer.invoke('settings:getAll'),
-  setSetting: (key: string, value: any) => ipcRenderer.invoke('settings:set', key, value),
+  setSetting: (key: string, value: unknown) => ipcRenderer.invoke('settings:set', key, value),
   onSettingsUpdate: (callback) => {
     const subscription = (_event, value) => callback(value)
     ipcRenderer.on('settings:updated', subscription)
@@ -38,7 +38,26 @@ const api = {
     return () => ipcRenderer.removeListener('capture:detected', subscription)
   },
   acceptCapturedLink: (url: string) => ipcRenderer.invoke('capture:accept', url),
-  dismissCapturedLink: (url: string) => ipcRenderer.invoke('capture:dismiss', url)
+  dismissCapturedLink: (url: string) => ipcRenderer.invoke('capture:dismiss', url),
+
+  // Task/Unified APIs
+  getAllTasks: () => ipcRenderer.invoke('tasks:getAll'),
+  pauseTask: (id: string) => ipcRenderer.invoke('tasks:pause', id),
+  resumeTask: (id: string) => ipcRenderer.invoke('tasks:resume', id),
+  cancelTask: (id: string) => ipcRenderer.invoke('tasks:cancel', id),
+  addMagnet: (magnet: string) => ipcRenderer.invoke('tasks:addMagnet', magnet),
+  addTorrentFile: (filePath: string) => ipcRenderer.invoke('tasks:addFile', filePath),
+
+  onTasksUpdate: (callback) => {
+    const subscription = (_event, value) => callback(value)
+    ipcRenderer.on('tasks:updated', subscription)
+    return () => ipcRenderer.removeListener('tasks:updated', subscription)
+  },
+  onTaskProgress: (callback) => {
+    const subscription = (_event, value) => callback(value)
+    ipcRenderer.on('tasks:progress', subscription)
+    return () => ipcRenderer.removeListener('tasks:progress', subscription)
+  }
 }
 
 // Use `contextBridge` APIs to expose Electron APIs to

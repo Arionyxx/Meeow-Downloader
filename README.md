@@ -11,6 +11,7 @@ Meeow-Downloader is a cross-platform download manager built with modern web tech
 ## ✨ Features
 
 - **📦 Download Queue**: Efficiently manage multiple downloads with priority handling.
+- **🌪️ Torrent Support**: Built-in torrent client with magnet link and .torrent file support.
 - **⏯️ Pause/Resume**: Interrupt and continue downloads at your convenience.
 - **💻 Cross-Platform**: Works seamlessly on Windows, Linux, and macOS.
 - **🔗 Auto-Capture**: Automatically detects download links and magnet links from your clipboard.
@@ -49,16 +50,17 @@ Before you begin, ensure you have the following installed:
 
 You can verify the integrity of the downloaded files by checking the SHA256 checksum provided with the release.
 
-
 ## 🚀 Development Setup
 
 1. **Clone the repository:**
+
    ```bash
    git clone https://github.com/meow-dev/meeow-downloader.git
    cd meeow-downloader
    ```
 
 2. **Install dependencies:**
+
    ```bash
    pnpm install
    ```
@@ -74,11 +76,13 @@ You can verify the integrity of the downloaded files by checking the SHA256 chec
 To create production builds:
 
 - **Build for all configured platforms:**
+
   ```bash
   pnpm build && pnpm package
   ```
 
 - **Build for Linux (AppImage):**
+
   ```bash
   pnpm dist:linux
   ```
@@ -103,7 +107,7 @@ src/
 
 ## 🧩 Architecture
 
-- **Main Process**: Handles native OS interactions, file system access, and core download logic using `electron-store` and native APIs.
+- **Main Process**: Handles native OS interactions, file system access, and core download logic using `electron-store` and native APIs. Includes a dedicated `TorrentManager` for P2P downloads.
 - **Renderer Process**: A React application that provides the UI. It communicates with the Main process via IPC (Inter-Process Communication).
 - **IPC**: Safe communication bridge exposed via `preload` scripts, allowing the renderer to request downloads and receive status updates.
 
@@ -116,15 +120,15 @@ src/
 
 ## 📜 Available Scripts
 
-| Script | Description |
-| :--- | :--- |
-| `pnpm dev` | Start the development server |
-| `pnpm build` | Build the production code |
-| `pnpm lint` | Run ESLint to check code quality |
-| `pnpm format` | Format code using Prettier |
-| `pnpm package` | Package the application for distribution |
-| `pnpm dist:linux` | Build AppImage for Linux |
-| `pnpm dist:win` | Build Installer for Windows |
+| Script            | Description                              |
+| :---------------- | :--------------------------------------- |
+| `pnpm dev`        | Start the development server             |
+| `pnpm build`      | Build the production code                |
+| `pnpm lint`       | Run ESLint to check code quality         |
+| `pnpm format`     | Format code using Prettier               |
+| `pnpm package`    | Package the application for distribution |
+| `pnpm dist:linux` | Build AppImage for Linux                 |
+| `pnpm dist:win`   | Build Installer for Windows              |
 
 ## ⚙️ Settings and Configuration
 
@@ -134,6 +138,7 @@ Configuration is handled via the "Settings" panel in the application:
 - **Max Concurrent Downloads**: Limit the number of active downloads (1-10).
 - **Enable Notifications**: Toggle desktop notifications for completed downloads.
 - **Auto Capture**: Enable automatic link detection from clipboard (URLs and Magnet links).
+- **Torrent Settings**: Configure default download location for torrents and seeding behavior.
 - **Theme**: Switch between Light, Dark, or System theme preference.
 
 ## 🤝 Contributing
@@ -159,4 +164,5 @@ Have questions or feedback? Reach out to us!
 - **Issues**: [GitHub Issues](https://github.com/meow-dev/meeow-downloader/issues)
 
 ---
-*Built with 🐱 and ☕ by the Meeow Team.*
+
+_Built with 🐱 and ☕ by the Meeow Team._

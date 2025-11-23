@@ -58,11 +58,27 @@
   white-space: nowrap;
 }
 
-.status-downloading { background-color: var(--cat-info); color: var(--cat-status-downloading-text); }
-.status-completed { background-color: var(--cat-success); color: var(--cat-status-completed-text); }
-.status-paused { background-color: var(--cat-warning); color: var(--cat-status-paused-text); }
-.status-error, .status-cancelled { background-color: var(--cat-error); color: var(--cat-status-error-text); }
-.status-pending { background-color: var(--cat-border); color: var(--cat-text-secondary); }
+.status-downloading {
+  background-color: var(--cat-info);
+  color: var(--cat-status-downloading-text);
+}
+.status-completed {
+  background-color: var(--cat-success);
+  color: var(--cat-status-completed-text);
+}
+.status-paused {
+  background-color: var(--cat-warning);
+  color: var(--cat-status-paused-text);
+}
+.status-error,
+.status-cancelled {
+  background-color: var(--cat-error);
+  color: var(--cat-status-error-text);
+}
+.status-pending {
+  background-color: var(--cat-border);
+  color: var(--cat-text-secondary);
+}
 
 .progress-section {
   display: flex;
@@ -128,19 +144,19 @@
   .card-top-row {
     flex-wrap: wrap;
   }
-  
+
   .file-icon {
     display: none;
   }
-  
+
   .status-pill {
     margin-left: auto;
   }
-  
+
   .card-actions {
     justify-content: stretch;
   }
-  
+
   .card-actions button {
     flex: 1;
   }

@@ -21,7 +21,9 @@ const Layout: React.FC<LayoutProps> = ({ children, activeView, onNavigate }) => 
             onClick={() => onNavigate('downloads')}
             title="Downloads"
           >
-            <span role="img" aria-label="downloads">⬇️</span>
+            <span role="img" aria-label="downloads">
+              ⬇️
+            </span>
             <span>Downloads</span>
           </div>
           <div
@@ -29,7 +31,9 @@ const Layout: React.FC<LayoutProps> = ({ children, activeView, onNavigate }) => 
             onClick={() => onNavigate('settings')}
             title="Settings"
           >
-            <span role="img" aria-label="settings">⚙️</span>
+            <span role="img" aria-label="settings">
+              ⚙️
+            </span>
             <span>Settings</span>
           </div>
         </nav>
@@ -43,13 +47,9 @@ const Layout: React.FC<LayoutProps> = ({ children, activeView, onNavigate }) => 
             </span>
           </div>
           {/* Placeholder for future status indicators */}
-          <div className="status-indicators">
-             {/* e.g. Network Status */}
-          </div>
+          <div className="status-indicators">{/* e.g. Network Status */}</div>
         </header>
-        <div className="content-area">
-          {children}
-        </div>
+        <div className="content-area">{children}</div>
       </main>
     </div>
   )

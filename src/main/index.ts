@@ -2,10 +2,12 @@ import { app, shell, BrowserWindow, ipcMain, nativeTheme } from 'electron'
 import { join } from 'path'
 import { electronApp, optimizer, is } from '@electron-toolkit/utils'
 import { DownloadManager } from './download-manager'
+import { TorrentManager } from './torrent-manager'
 import { LinkCaptureService } from './auto-capture'
 import { store } from './store'
 
 let downloadManager: DownloadManager
+let torrentManager: TorrentManager
 let linkCaptureService: LinkCaptureService
 
 function createWindow(): void {
@@ -57,6 +59,10 @@ app.whenReady().then(() => {
   downloadManager.setMaxConcurrent(store.get('maxConcurrentDownloads'))
   downloadManager.setDefaultDownloadDirectory(store.get('defaultDownloadDirectory'))
 
+  torrentManager = new TorrentManager()
+  torrentManager.setDefaultDownloadDirectory(store.get('torrentDownloadDirectory'))
+  torrentManager.setSeedingEnabled(store.get('torrentSeedingEnabled'))
+
   linkCaptureService = new LinkCaptureService(downloadManager)
 
   // IPC handlers
@@ -68,6 +74,10 @@ app.whenReady().then(() => {
       downloadManager.setMaxConcurrent(value as number)
     } else if (key === 'defaultDownloadDirectory') {
       downloadManager.setDefaultDownloadDirectory(value as string)
+    } else if (key === 'torrentDownloadDirectory') {
+      torrentManager.setDefaultDownloadDirectory(value as string)
+    } else if (key === 'torrentSeedingEnabled') {
+      torrentManager.setSeedingEnabled(value as boolean)
     }
 
     // Notify windows of settings change
@@ -88,6 +98,7 @@ app.whenReady().then(() => {
     })
   })
 
+  // HTTP Download IPC (Legacy)
   ipcMain.handle('download:enqueue', (_, url) => downloadManager.enqueue(url))
   ipcMain.handle('download:pause', (_, id) => downloadManager.pause(id))
   ipcMain.handle('download:resume', (_, id) => downloadManager.resume(id))
@@ -101,15 +112,64 @@ app.whenReady().then(() => {
     })
   })
 
+  // Coordinator & Tasks IPC
+  const getAllTasks = () => {
+    const downloads = downloadManager.getDownloads().map((d) => ({ ...d, kind: 'http' }))
+    const torrents = torrentManager.getTorrents().map((t) => ({ ...t, kind: 'torrent' }))
+    return [...downloads, ...torrents].sort((a, b) => b.createdDate - a.createdDate)
+  }
+
+  const broadcastTasksUpdate = () => {
+    const tasks = getAllTasks()
+    BrowserWindow.getAllWindows().forEach((win) => {
+      win.webContents.send('tasks:updated', tasks)
+    })
+  }
+
+  ipcMain.handle('tasks:getAll', () => getAllTasks())
+
+  ipcMain.handle('tasks:pause', (_, id) => {
+    // Try both
+    downloadManager.pause(id)
+    torrentManager.pause(id)
+  })
+
+  ipcMain.handle('tasks:resume', (_, id) => {
+    // Try both
+    downloadManager.resume(id)
+    torrentManager.resume(id)
+  })
+
+  ipcMain.handle('tasks:cancel', (_, id) => {
+    // Try both
+    downloadManager.cancel(id)
+    torrentManager.cancel(id)
+  })
+
+  ipcMain.handle('tasks:addMagnet', (_, magnet) => torrentManager.addFromMagnet(magnet))
+  ipcMain.handle('tasks:addFile', (_, filePath) => torrentManager.addFromFile(filePath))
+
   downloadManager.on('updated', (downloads) => {
     BrowserWindow.getAllWindows().forEach((win) => {
       win.webContents.send('download:updated', downloads)
     })
+    broadcastTasksUpdate()
   })
 
   downloadManager.on('progress', (data) => {
     BrowserWindow.getAllWindows().forEach((win) => {
       win.webContents.send('download:progress', data)
+      win.webContents.send('tasks:progress', { ...data, kind: 'http' })
+    })
+  })
+
+  torrentManager.on('updated', () => {
+    broadcastTasksUpdate()
+  })
+
+  torrentManager.on('progress', (data) => {
+    BrowserWindow.getAllWindows().forEach((win) => {
+      win.webContents.send('tasks:progress', { ...data, kind: 'torrent' })
     })
   })
 

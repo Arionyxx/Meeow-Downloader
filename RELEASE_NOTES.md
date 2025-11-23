@@ -3,23 +3,27 @@
 We are purr-oud to announce the initial launch of Meeow-Downloader! 😺
 
 ## Key Features
+
 - **Download Queue**: Manage your downloads efficiently.
 - **Pause/Resume**: Stop and start downloads at your convenience.
 - **Cross-Platform**: Available for Windows and Arch Linux.
 - **Cat UI**: A cozy cat-themed interface to make downloading fun!
 
 ## Supported Platforms
+
 - Windows 10/11
 - Arch Linux (AppImage)
 
 ## Installation Instructions
 
 ### Windows
+
 1. Download `Meeow-Downloader-Setup-1.0.0.exe`.
 2. Run the installer and follow the on-screen instructions.
 3. Enjoy your new feline download companion!
 
 ### Linux
+
 1. Download `Meeow-Downloader-1.0.0.AppImage`.
 2. Make the file executable:
    ```bash
@@ -31,16 +35,20 @@ We are purr-oud to announce the initial launch of Meeow-Downloader! 😺
    ```
 
 ## Checksums
+
 SHA256 checksums are provided for verification.
+
 - Windows: `Meeow-Downloader-Setup-1.0.0.exe.sha256`
 - Linux: `Meeow-Downloader-1.0.0.AppImage.sha256`
 
 ## Known Issues
+
 - Windows installer build currently requires Wine configuration on some Linux environments.
 
 ## Version 1.1.0 - Dark Mode Arrives! 🌙
 
 The cats have been working hard in the night shift!
+
 - **True Dark Mode**: A complete dark theme implementation that's easy on the eyes.
 - **System Theme Support**: The app now automatically syncs with your OS theme settings (Light/Dark).
 - **Instant Switching**: Change themes instantly without restarting the app.
@@ -48,6 +56,7 @@ The cats have been working hard in the night shift!
 ## Version 1.2.0 - Auto Capture Feature 🎣
 
 We've taught the cats to catch links!
+
 - **Auto Capture**: The app now automatically detects download links and magnet URIs copied to your clipboard.
 - **Smart Notification**: A non-intrusive popup allows you to quickly add detected links to your queue or ignore them.
 - **Customizable**: Enable/disable specific sources (Clipboard, Magnet) in Settings.
